@@ -1,23 +1,26 @@
 import random
 
 class monster:
-    def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, attack1, attack2 = None):
+    def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2 = None):
         self.name = name
         self.armor_class = armor_class
         self.hitdice_amount = hitdice_amount
         self.hit_dice = hit_dice
         self.hp_mod = hp_mod
+        self.dex_mod = dex_mod
         self.attack1 = attack1
         self.attack2 = attack2
+        self.intiative = random.randrange(1, 20) + dex_mod
 
     def getName(self):
         print('Name: {}'.format(self.name))
 
     def display_info(self):
         self.getName()
-        self.attack1.total_damage()
-        self.attack2.total_damage()
+        #self.attack1.total_damage()
 
+    def get_initiative_roll(self):
+        print(self.intiative)
 
 class attack():
     def __init__(self, name,  to_hit, dmg_dice_amount, dmg_dice, dmg_mod, \
@@ -37,7 +40,7 @@ class attack():
 
 
     #Calcs roll and damage dealt
-    def total_damage(self):
+    def attack(self):
         rolleddice = 0
         rolleddamage = 0
 
@@ -81,8 +84,8 @@ class rechargeAttack:
         self.shape = shape
         self.recharge = recharge
 
-
-    def total_damage(self):
+    #uses recharge attack
+    def attack(self):
         rolleddice = 0
         rolleddamage = 0
         while (rolleddice < self.dmg_dice_amount):
@@ -94,7 +97,7 @@ class rechargeAttack:
 
         self.recharge = False
 
-    #1/3 change or recharging weapon
+    #1/3 chance of recharging weapon
     def rechargeCheck(self):
         x = random.randrange(1, 3)
         if x == 3:
@@ -105,27 +108,3 @@ class rechargeAttack:
     def getName(self):
         print('Attack Name: {}'.format(self.name))
             
-
-
-
-def main():
-    # HellHound_Bite = attack('Bite', 5, 1, 8, 3, 'piercing', 2, 6, 'fire', 0)
-    # Fire_Breath = rechargeAttack('Fire Breath', 12, 'Dex', 6, 6, 'fire', '15ft', 'cone')
-    # HellHound = monster('Hell Hound', 15, 7, 8, 14, HellHound_Bite, Fire_Breath)
-    # HellHound.display_info()
-    monsters = []
-    monsteramount = int(input("Number of mons: "))
-    x = 0
-    while (x < monsteramount):
-        HellHound_Bite = attack('Bite', 5, 1, 8, 3, 'piercing', 2, 6, 'fire', 0)
-        Fire_Breath = rechargeAttack('Fire Breath', 12, 'Dex', 6, 6, 'fire', '15ft', 'cone')
-        monsters.append(monster('Hell Hound', 15, 7, 8, 14, HellHound_Bite, Fire_Breath))
-        x += 1
-    
-    for i in monsters:
-        i.display_info()
-    
-
-
-if __name__=="__main__":
-    main()
