@@ -1,5 +1,6 @@
 import random
 
+#Basic monsters with 1 or 2 attacks
 class monster:
     def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2 = None, number = 1):
         self.name = name
@@ -10,7 +11,7 @@ class monster:
         self.dex_mod = dex_mod
         self.attack1 = attack1
         self.attack2 = attack2
-        self.number = number
+        self.number = number #number exists for multiple monsters with the same name, differntiates them
         self.intiative = random.randrange(1, 20) + dex_mod
 
     def newnumber(self, newnumber):
@@ -22,6 +23,12 @@ class monster:
 
     def get_initiative_roll(self):
         print(self.intiative)
+
+#Monsters with a recharge weapon
+class rechargeMonster(monster):
+    def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2=None, number=1):
+        super().__init__(name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2, number=number)
+
 
 class attack():
     def __init__(self, name,  to_hit, dmg_dice_amount, dmg_dice, dmg_mod, \
