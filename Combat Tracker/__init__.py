@@ -1,23 +1,25 @@
 from classes import *
+from functions import *
+import collections
+
 
 def main():
     monsters = []
-    monsteramount = int(input("Number of mons: "))
-    x = 0
-    while (x < monsteramount):
-        HellHound_Bite = attack('Bite', 5, 1, 8, 3, 'piercing', 2, 6, 'fire', 0)
-        Fire_Breath = rechargeAttack('Fire Breath', 12, 'Dex', 6, 6, 'fire', '15ft', 'cone')
-        monsters.append(monster('Hell Hound', 15, 7, 8, 14, 3, HellHound_Bite, Fire_Breath))
-        x += 1
+    options = ['[0]: Add Monsters', '[1] Add Player', '[8] Run Count', '[9] End the game']
+    menu_running = [True] #has to be in the form of a list to be modified by the function
+
+    while (menu_running[0]):
+        for i in options:
+            print("{} ".format(i), end="")
     
-    monsters.sort(key=lambda x:x.intiative)
-    
-    for i in monsters:
-        i.display_info()
-        print(i.intiative)
-
-
-
+        #grabs user input and then calls the function associated with what was picked
+        option_input(monsters, options, menu_running)
+        
+        for i in monsters:
+            if type(i) == monster:
+                print("{} {} Ini: {}".format(i.name, i.number, i.intiative))
+            if type(i) == customInput:
+                print("{} Ini: {}".format(i.name, i.intiative))
 
 if __name__=="__main__":
     main()

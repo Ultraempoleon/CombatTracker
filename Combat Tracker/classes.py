@@ -1,7 +1,7 @@
 import random
 
 class monster:
-    def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2 = None):
+    def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2 = None, number = 1):
         self.name = name
         self.armor_class = armor_class
         self.hitdice_amount = hitdice_amount
@@ -10,10 +10,11 @@ class monster:
         self.dex_mod = dex_mod
         self.attack1 = attack1
         self.attack2 = attack2
+        self.number = number
         self.intiative = random.randrange(1, 20) + dex_mod
 
-    def getName(self):
-        print('Name: {}'.format(self.name))
+    def newnumber(self, newnumber):
+        self.number = newnumber
 
     def display_info(self):
         self.getName()
@@ -69,9 +70,6 @@ class attack():
     def getName(self):
         print('Attack Name: {}'.format(self.name))
 
- 
-
-
 class rechargeAttack:
     def __init__(self, name, DC, DC_check, dmg_dice_amount, dmg_dice, dmg_type, range, shape, recharge = True):
         self.name = name
@@ -104,6 +102,14 @@ class rechargeAttack:
             self.recharge = True
         else:
             pass
+
+class customInput():
+    def __init__(self, name, intiative):
+        self.name = name
+        self.intiative = intiative
+
+    def change_roll(self):
+        self.intiative = input('New Roll: ')
 
     def getName(self):
         print('Attack Name: {}'.format(self.name))
