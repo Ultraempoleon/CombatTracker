@@ -38,11 +38,24 @@ def addplayers(monsters):
         #sorts the current intiative count
         sortIntiative_count(monsters)
 
-#Run the turn (working on)
+#Damage a monster
+def damagemonster(monsters):
+    
+    try:
+        monster_selected = int(input("Pick a monster on the initiative count: "))
+        damage_dealt = int(input("Enter damage dealth: "))
+    except ValueError:
+        print("Error! Has to be a number\n")
+    monsters[monster_selected].take_damage(damage_dealt)
+
+#Run the turn
 def runturn(monsters):
     
     for m in monsters:
-        pass
+        if (type(m) == monster) or (issubclass(type(m), monster)):
+            m.turn()
+        else:
+            print("Nothing happened")
     pass
 
 #Ends the menu loop
@@ -73,7 +86,7 @@ def display_initiative(monsters):
     print("\n\n\n")
     for i in monsters:
         if (type(i) == monster) or (issubclass(type(i), monster)):
-            print("{} {} Ini: {}".format(i.name, i.number, i.intiative))
+            print("{} {} Ini: {} HP: {}".format(i.name, i.number, i.intiative, i.hp))
         elif type(i) == customInput:
             print("{} Ini: {}".format(i.name, i.intiative))
         else:
@@ -85,6 +98,8 @@ def option_functions(monsters, user_choice, options, menu_running):
         addmonsters(monsters)
     elif user_choice == 1:
         addplayers(monsters)
+    elif user_choice == 2:
+        damagemonster(monsters)
     elif user_choice == 8:
         runturn(monsters)
     elif user_choice == 9:

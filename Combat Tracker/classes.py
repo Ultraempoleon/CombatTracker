@@ -13,6 +13,8 @@ class monster:
         self.attack2 = attack2
         self.number = number #number exists for multiple monsters with the same name, differntiates them
         self.intiative = random.randrange(1, 20) + dex_mod
+        self.hp = ((random.randrange(1, hit_dice) * hitdice_amount) + hp_mod)
+
 
     def newnumber(self, newnumber):
         self.number = newnumber
@@ -24,12 +26,35 @@ class monster:
     def get_initiative_roll(self):
         print(self.intiative)
 
+    def take_damage(self, damage_taken):
+        self.hp -= damage_taken
+
 #Monsters with a recharge weapon
 class rechargeMonster(monster):
     def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2=None, number=1):
         super().__init__(name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2, number=number)
 
+    def turn(self):
+        if type(self.attack2) == rechargeAttack:
+            if self.attack2.recharge == True:
+                self.attack2.attack()
+            else:
+                self.attack2.rechargeCheck()
+                self.attack1.attack()
 
+#Presumed a new player but it can be anything
+class customInput():
+    def __init__(self, name, intiative):
+        self.name = name
+        self.intiative = intiative
+
+    def change_roll(self):
+        self.intiative = input('New Roll: ')
+
+    def getName(self):
+        print('Attack Name: {}'.format(self.name))
+            
+#Normal Attack
 class attack():
     def __init__(self, name,  to_hit, dmg_dice_amount, dmg_dice, dmg_mod, \
                 dmg_type, dmg_dice2_amount=0, dmg_dice2=0, dmg_type2="",\
@@ -77,6 +102,7 @@ class attack():
     def getName(self):
         print('Attack Name: {}'.format(self.name))
 
+#Rechargable Attack
 class rechargeAttack:
     def __init__(self, name, DC, DC_check, dmg_dice_amount, dmg_dice, dmg_type, range, shape, recharge = True):
         self.name = name
@@ -104,20 +130,6 @@ class rechargeAttack:
 
     #1/3 chance of recharging weapon
     def rechargeCheck(self):
-        x = random.randrange(1, 3)
-        if x == 3:
+        check = random.randrange(3)
+        if check == 2:
             self.recharge = True
-        else:
-            pass
-
-class customInput():
-    def __init__(self, name, intiative):
-        self.name = name
-        self.intiative = intiative
-
-    def change_roll(self):
-        self.intiative = input('New Roll: ')
-
-    def getName(self):
-        print('Attack Name: {}'.format(self.name))
-            
