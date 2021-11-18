@@ -40,13 +40,28 @@ def addplayers(monsters):
 
 #Damage a monster
 def damagemonster(monsters):
-    
-    try:
-        monster_selected = int(input("Pick a monster on the initiative count: "))
-        damage_dealt = int(input("Enter damage dealth: "))
-    except ValueError:
-        print("Error! Has to be a number\n")
+
+    listsize = len(monsters)
+    correct_input = True
+    while correct_input:
+        try:
+            monster_selected = int(input("Pick a monster on the initiative count: "))
+            if monster_selected > listsize:
+                print("Doesn't exist on the initiative count!")
+                continue
+
+            if (type(monsters[monster_selected]) == monster) or (issubclass(type(monsters[monster_selected]), monster)):
+                damage_dealt = int(input("Enter damage dealth: "))
+            else:
+                print("That's not a monster!")
+                continue
+            break
+        except ValueError:
+            print("Error! Has to be a number\n")
+
     monsters[monster_selected].take_damage(damage_dealt)
+    dead = monsters[monster_selected].hp
+    print(dead)
 
 #Run the turn
 def runturn(monsters):
@@ -84,13 +99,15 @@ def option_input(monsters, options, menu_running):
 #prints the current intiative order
 def display_initiative(monsters):
     print("\n\n\n")
+    x = 0
     for i in monsters:
         if (type(i) == monster) or (issubclass(type(i), monster)):
-            print("{} {} Ini: {} HP: {}".format(i.name, i.number, i.intiative, i.hp))
+            print("[{}]: {} {} Ini: {} HP: {}".format(x, i.name, i.number, i.intiative, i.hp))
         elif type(i) == customInput:
-            print("{} Ini: {}".format(i.name, i.intiative))
+            print("[{}]: {} Ini: {}".format(x, i.name, i.intiative))
         else:
             print("Has no type")
+        x += 1
 
 #calls the function associated with what the user picked
 def option_functions(monsters, user_choice, options, menu_running):
