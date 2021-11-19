@@ -92,12 +92,12 @@ class attack():
                 rolleddice += 1
             
             #output if damage has 2 types
-            print("{} : {} damage | {} {} and {} {}".format(roll_to_hit, #this print message is just long, weird formatting
+            print("Uses {} - {} : {} damage | {} {} and {} {}".format(self.name, roll_to_hit, #this print message is just long, weird formatting
                 total_rolleddamage, rolleddamage, self.dmg_type, 
                 rolleddamage2, self.dmg_type2))
                 
         else:
-            print("{} : {} {}".format(roll_to_hit, rolleddamage, self.dmg_type))
+            print("Uses {} - {} : {} {}".format(self.name, roll_to_hit, rolleddamage, self.dmg_type))
 
     def getName(self):
         print('Attack Name: {}'.format(self.name))

@@ -17,6 +17,7 @@ def addmonsters(monsters):
     
     #sorts the current initiative count
     sortIntiative_count(monsters)    
+    display_initiative(monsters)
 
 #Adds new non monsters to the list (presumed players)
 def addplayers(monsters):
@@ -37,6 +38,7 @@ def addplayers(monsters):
         
         #sorts the current intiative count
         sortIntiative_count(monsters)
+    display_initiative(monsters)
 
 #Damage a monster
 def damagemonster(monsters):
@@ -61,6 +63,9 @@ def damagemonster(monsters):
 
     monsters[monster_selected].take_damage(damage_dealt)
     dead = monsters[monster_selected].hp
+    if dead <= 0:
+        pass
+    
     print(dead)
 
 #Run the turn
@@ -68,9 +73,8 @@ def runturn(monsters):
     
     for m in monsters:
         if (type(m) == monster) or (issubclass(type(m), monster)):
+            print("{} {}".format(m.name, m.number))
             m.turn()
-        else:
-            print("Nothing happened")
     pass
 
 #Ends the menu loop

@@ -14,7 +14,6 @@ def main():
     
         #grabs user input and then calls the function associated with what was picked
         option_input(monsters, options, menu_running)
-        display_initiative(monsters)
 
 if __name__=="__main__":
     main()
