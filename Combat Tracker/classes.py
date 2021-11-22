@@ -42,6 +42,15 @@ class rechargeMonster(monster):
                 self.attack2.rechargeCheck()
                 self.attack1.attack()
 
+
+class multiattackMonster_OneTwo(monster):
+
+    def __init__(self, name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2=None, number=1):
+        super().__init__(name, armor_class, hitdice_amount, hit_dice, hp_mod, dex_mod, attack1, attack2=attack2, number=number)
+
+    def turn(self):
+        pass
+
 #Presumed a new player but it can be anything
 class customInput():
     def __init__(self, name, intiative):
@@ -58,7 +67,7 @@ class customInput():
 class attack():
     def __init__(self, name,  to_hit, dmg_dice_amount, dmg_dice, dmg_mod, \
                 dmg_type, dmg_dice2_amount=0, dmg_dice2=0, dmg_type2="",\
-                dmg_mod2=0, recharge1 = False, recharge2 = False):
+                dmg_mod2=0):
         self.name = name
         self.to_hit = to_hit
         self.dmg_dice_amount = dmg_dice_amount
@@ -133,3 +142,30 @@ class rechargeAttack:
         check = random.randrange(3)
         if check == 2:
             self.recharge = True
+
+class multiAttack(attack):
+    def __init__(self, name, to_hit, dmg_dice_amount, dmg_dice, dmg_mod, dmg_type, dmg_dice2_amount=0, dmg_dice2=0, dmg_type2="", dmg_mod2=0):
+        super().__init__(name, to_hit, dmg_dice_amount, dmg_dice, dmg_mod, dmg_type, dmg_dice2_amount=dmg_dice2_amount, dmg_dice2=dmg_dice2, dmg_type2=dmg_type2, dmg_mod2=dmg_mod2)
+
+    def attack(self):
+        rolled_dice = 0
+        rolled_damage = 0
+        rolled_damage2 = 0
+
+        roll_to_hit = random.randrange(1, 20) + self.to_hit
+        roll_to_hit2 = random.randrange(1, 20) + self.to_hit
+
+        while (rolled_dice < self.dmg_dice_amount):
+            rolled_damage += random.randrange(1, self.dmg_dice) + self.dmg_mod
+            rolled_dice += 1
+
+        rolled_dice = 0
+        while (rolled_dice < self.dmg_dice2_amount):
+            rolled_damage2 += random.randrange(1, self.dmg_dice2) + self.dmg_mod2
+            rolled_dice += 1
+
+        
+        
+            
+        
+        

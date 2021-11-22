@@ -4,7 +4,7 @@ from functions import *
 
 def main():
     monsters = []
-    options = ['[0] Add Monsters', '[1] Add Player', '[2] Damage a Monster' '[8] Run the turn', '[9] End the game']
+    options = ['[0] Add Monsters', '[1] Add Player', '[2] Damage a Monster', '[3] Display Initiative', '[8] Run the turn', '[9] End the game']
     menu_running = [True] #has to be in the form of a list to be modified by the function
 
     while (menu_running[0]):

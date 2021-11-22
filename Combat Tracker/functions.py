@@ -64,9 +64,11 @@ def damagemonster(monsters):
     monsters[monster_selected].take_damage(damage_dealt)
     dead = monsters[monster_selected].hp
     if dead <= 0:
-        pass
+        del monsters[monster_selected]
     
     print(dead)
+
+    display_initiative(monsters)
 
 #Run the turn
 def runturn(monsters):
@@ -75,7 +77,6 @@ def runturn(monsters):
         if (type(m) == monster) or (issubclass(type(m), monster)):
             print("{} {}".format(m.name, m.number))
             m.turn()
-    pass
 
 #Ends the menu loop
 def endmenu(menu_running):
@@ -106,10 +107,12 @@ def display_initiative(monsters):
     x = 0
     for i in monsters:
         if (type(i) == monster) or (issubclass(type(i), monster)):
-            print("[{}]: {} {} Ini: {} HP: {}".format(x, i.name, i.number, i.intiative, i.hp))
+            #[loop]: 
+            print("[{}]: Ini: {} | {} {}  HP: {}".format(x, i.intiative, i.name, i.number, i.hp))
         elif type(i) == customInput:
-            print("[{}]: {} Ini: {}".format(x, i.name, i.intiative))
+            print("[{}]: Ini: {} | {} ".format(x, i.intiative, i.name))
         else:
+            
             print("Has no type")
         x += 1
 
@@ -121,6 +124,8 @@ def option_functions(monsters, user_choice, options, menu_running):
         addplayers(monsters)
     elif user_choice == 2:
         damagemonster(monsters)
+    elif user_choice == 3:
+        display_initiative(monsters)
     elif user_choice == 8:
         runturn(monsters)
     elif user_choice == 9:
